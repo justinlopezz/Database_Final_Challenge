@@ -24,9 +24,9 @@ namespace CM_API.Controllers
 
         // GET: api/JusCustomers/5
         [ResponseType(typeof(JusCustomer))]
-        public IHttpActionResult GetJusCustomer(int id)
+        public IHttpActionResult GetJusCustomer(int CustNo)
         {
-            JusCustomer jusCustomer = db.JusCustomers.Find(id);
+            JusCustomer jusCustomer = db.JusCustomers.Find(CustNo);
             if (jusCustomer == null)
             {
                 return NotFound();
