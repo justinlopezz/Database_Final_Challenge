@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DADModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="JusCustomer">
+          <Key>
+            <PropertyRef Name="CustNo" />
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="CustNo" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustPcode" Type="int" Nullable="false" />
+          <Property Name="InterestCode" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JusInterest">
+          <Key>
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="InterestCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="InterestDesc" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JusRecords">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Performer" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JusSale">
+          <Key>
+            <PropertyRef Name="DateOrdered" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="CustNo" />
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="DateOrdered" Type="date" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="RecordID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustNo" Type="int" Nullable="false" />
+          <Property Name="InterestCode" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__JusCustom__Inter__0F2D40CE">
+          <End Role="JusInterest" Type="Self.JusInterest" Multiplicity="1" />
+          <End Role="JusCustomer" Type="Self.JusCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusInterest">
+              <PropertyRef Name="InterestCode" />
+            </Principal>
+            <Dependent Role="JusCustomer">
+              <PropertyRef Name="InterestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JusSale__11158940">
+          <End Role="JusCustomer" Type="Self.JusCustomer" Multiplicity="1" />
+          <End Role="JusSale" Type="Self.JusSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusCustomer">
+              <PropertyRef Name="CustNo" />
+              <PropertyRef Name="InterestCode" />
+            </Principal>
+            <Dependent Role="JusSale">
+              <PropertyRef Name="CustNo" />
+              <PropertyRef Name="InterestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JusSale__RecordI__10216507">
+          <End Role="JusRecords" Type="Self.JusRecords" Multiplicity="1" />
+          <End Role="JusSale" Type="Self.JusSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusRecords">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="JusSale">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DADModelStoreContainer">
+          <EntitySet Name="JusCustomer" EntityType="Self.JusCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JusInterest" EntityType="Self.JusInterest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JusRecords" EntityType="Self.JusRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JusSale" EntityType="Self.JusSale" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__JusCustom__Inter__0F2D40CE" Association="Self.FK__JusCustom__Inter__0F2D40CE">
+            <End Role="JusInterest" EntitySet="JusInterest" />
+            <End Role="JusCustomer" EntitySet="JusCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JusSale__11158940" Association="Self.FK__JusSale__11158940">
+            <End Role="JusCustomer" EntitySet="JusCustomer" />
+            <End Role="JusSale" EntitySet="JusSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JusSale__RecordI__10216507" Association="Self.FK__JusSale__RecordI__10216507">
+            <End Role="JusRecords" EntitySet="JusRecords" />
+            <End Role="JusSale" EntitySet="JusSale" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DADModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="JusCustomer">
+          <Key>
+            <PropertyRef Name="CustNo" />
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="CustNo" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustPcode" Type="Int32" Nullable="false" />
+          <Property Name="InterestCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="JusInterest" Relationship="Self.FK__JusCustom__Inter__0F2D40CE" FromRole="JusCustomer" ToRole="JusInterest" />
+          <NavigationProperty Name="JusSales" Relationship="Self.FK__JusSale__11158940" FromRole="JusCustomer" ToRole="JusSale" />
+        </EntityType>
+        <EntityType Name="JusInterest">
+          <Key>
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="InterestCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InterestDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="JusCustomers" Relationship="Self.FK__JusCustom__Inter__0F2D40CE" FromRole="JusInterest" ToRole="JusCustomer" />
+        </EntityType>
+        <EntityType Name="JusRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Performer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="JusSales" Relationship="Self.FK__JusSale__RecordI__10216507" FromRole="JusRecords" ToRole="JusSale" />
+        </EntityType>
+        <EntityType Name="JusSale">
+          <Key>
+            <PropertyRef Name="DateOrdered" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="CustNo" />
+            <PropertyRef Name="InterestCode" />
+          </Key>
+          <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="RecordID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustNo" Type="Int32" Nullable="false" />
+          <Property Name="InterestCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="JusCustomer" Relationship="Self.FK__JusSale__11158940" FromRole="JusSale" ToRole="JusCustomer" />
+          <NavigationProperty Name="JusRecord" Relationship="Self.FK__JusSale__RecordI__10216507" FromRole="JusSale" ToRole="JusRecords" />
+        </EntityType>
+        <Association Name="FK__JusCustom__Inter__0F2D40CE">
+          <End Role="JusInterest" Type="Self.JusInterest" Multiplicity="1" />
+          <End Role="JusCustomer" Type="Self.JusCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusInterest">
+              <PropertyRef Name="InterestCode" />
+            </Principal>
+            <Dependent Role="JusCustomer">
+              <PropertyRef Name="InterestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JusSale__11158940">
+          <End Role="JusCustomer" Type="Self.JusCustomer" Multiplicity="1" />
+          <End Role="JusSale" Type="Self.JusSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusCustomer">
+              <PropertyRef Name="CustNo" />
+              <PropertyRef Name="InterestCode" />
+            </Principal>
+            <Dependent Role="JusSale">
+              <PropertyRef Name="CustNo" />
+              <PropertyRef Name="InterestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JusSale__RecordI__10216507">
+          <End Role="JusRecords" Type="Self.JusRecord" Multiplicity="1" />
+          <End Role="JusSale" Type="Self.JusSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JusRecords">
+              <PropertyRef Name="RecordID" />
+            </Principal>
+            <Dependent Role="JusSale">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DADEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="JusCustomers" EntityType="Self.JusCustomer" />
+          <EntitySet Name="JusInterests" EntityType="Self.JusInterest" />
+          <EntitySet Name="JusRecords" EntityType="Self.JusRecord" />
+          <EntitySet Name="JusSales" EntityType="Self.JusSale" />
+          <AssociationSet Name="FK__JusCustom__Inter__0F2D40CE" Association="Self.FK__JusCustom__Inter__0F2D40CE">
+            <End Role="JusInterest" EntitySet="JusInterests" />
+            <End Role="JusCustomer" EntitySet="JusCustomers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JusSale__11158940" Association="Self.FK__JusSale__11158940">
+            <End Role="JusCustomer" EntitySet="JusCustomers" />
+            <End Role="JusSale" EntitySet="JusSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JusSale__RecordI__10216507" Association="Self.FK__JusSale__RecordI__10216507">
+            <End Role="JusRecords" EntitySet="JusRecords" />
+            <End Role="JusSale" EntitySet="JusSales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DADModelStoreContainer" CdmEntityContainer="DADEntities">
+          <EntitySetMapping Name="JusCustomers">
+            <EntityTypeMapping TypeName="DADModel.JusCustomer">
+              <MappingFragment StoreEntitySet="JusCustomer">
+                <ScalarProperty Name="CustNo" ColumnName="CustNo" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
+                <ScalarProperty Name="CustPcode" ColumnName="CustPcode" />
+                <ScalarProperty Name="InterestCode" ColumnName="InterestCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JusInterests">
+            <EntityTypeMapping TypeName="DADModel.JusInterest">
+              <MappingFragment StoreEntitySet="JusInterest">
+                <ScalarProperty Name="InterestCode" ColumnName="InterestCode" />
+                <ScalarProperty Name="InterestDesc" ColumnName="InterestDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JusRecords">
+            <EntityTypeMapping TypeName="DADModel.JusRecord">
+              <MappingFragment StoreEntitySet="JusRecords">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Performer" ColumnName="Performer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JusSales">
+            <EntityTypeMapping TypeName="DADModel.JusSale">
+              <MappingFragment StoreEntitySet="JusSale">
+                <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="CustNo" ColumnName="CustNo" />
+                <ScalarProperty Name="InterestCode" ColumnName="InterestCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
